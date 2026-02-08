@@ -7,6 +7,30 @@ import Page2Memories from './components/Page2Memories'
 import Page3Letter from './components/Page3Letter'
 import Page4Closure from './components/Page4Closure'
 
+function ResponsiveGroup({ children }) {
+  const [scale, setScale] = useState(1)
+
+  useEffect(() => {
+    const handleResize = () => {
+      // Start scaling down if width is < 768px (typical tablet/mobile breakpoint)
+      const width = window.innerWidth
+      if (width < 500) {
+        setScale(0.5) // Mobile
+      } else if (width < 768) {
+        setScale(0.7) // Tablet
+      } else {
+        setScale(1)   // Desktop
+      }
+    }
+
+    handleResize() // Initial check
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  return <group scale={scale}>{children}</group>
+}
+
 export default function App() {
   const [page, setPage] = useState(0)
 
@@ -39,12 +63,12 @@ export default function App() {
 
         {/* Use Suspense for loading assets */}
         <Suspense fallback={null}>
-          <group>
+          <ResponsiveGroup>
             {page === 0 && <Page1Celebration onNext={() => setPage(1)} />}
             {page === 1 && <Page2Memories onNext={() => setPage(2)} />}
             {page === 2 && <Page3Letter onNext={() => setPage(3)} />}
             {page === 3 && <Page4Closure />}
-          </group>
+          </ResponsiveGroup>
         </Suspense>
       </Canvas>
 
