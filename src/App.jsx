@@ -14,9 +14,13 @@ function ResponsiveCamera() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 500) setZPos(18) // Mobile: Move way back
-      else if (window.innerWidth < 1000) setZPos(14) // Tablet/Small laptop
-      else setZPos(10) // Desktop
+      if (window.innerWidth < 500) {
+        setZPos(28) // HUGE Zoom out for Mobile to fit wide text
+      } else if (window.innerWidth < 1000) {
+        setZPos(16) // Tablet
+      } else {
+        setZPos(10) // Desktop
+      }
     }
     window.addEventListener('resize', handleResize)
     handleResize()
