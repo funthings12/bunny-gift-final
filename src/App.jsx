@@ -7,28 +7,23 @@ import Page2Memories from './components/Page2Memories'
 import Page3Letter from './components/Page3Letter'
 import Page4Closure from './components/Page4Closure'
 
-function ResponsiveGroup({ children }) {
-  const [scale, setScale] = useState(1)
+// ResponsiveGroup removed
+
+function ResponsiveCamera() {
+  const [zPos, setZPos] = useState(10)
 
   useEffect(() => {
     const handleResize = () => {
-      // Start scaling down if width is < 768px (typical tablet/mobile breakpoint)
-      const width = window.innerWidth
-      if (width < 500) {
-        setScale(0.5) // Mobile
-      } else if (width < 768) {
-        setScale(0.7) // Tablet
-      } else {
-        setScale(1)   // Desktop
-      }
+      if (window.innerWidth < 500) setZPos(18) // Mobile: Move way back
+      else if (window.innerWidth < 1000) setZPos(14) // Tablet/Small laptop
+      else setZPos(10) // Desktop
     }
-
-    handleResize() // Initial check
     window.addEventListener('resize', handleResize)
+    handleResize()
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  return <group scale={scale}>{children}</group>
+  return <PerspectiveCamera makeDefault position={[0, 0, zPos]} fov={50} />
 }
 
 export default function App() {
@@ -50,7 +45,7 @@ export default function App() {
   return (
     <>
       <Canvas shadows dpr={[1, 2]} gl={{ antialias: true }}>
-        <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={50} />
+        <ResponsiveCamera />
         <color attach="background" args={['#050510']} />
 
         {/* Cinematic Lighting */}
@@ -63,12 +58,12 @@ export default function App() {
 
         {/* Use Suspense for loading assets */}
         <Suspense fallback={null}>
-          <ResponsiveGroup>
+          <group>
             {page === 0 && <Page1Celebration onNext={() => setPage(1)} />}
             {page === 1 && <Page2Memories onNext={() => setPage(2)} />}
             {page === 2 && <Page3Letter onNext={() => setPage(3)} />}
             {page === 3 && <Page4Closure />}
-          </ResponsiveGroup>
+          </group>
         </Suspense>
       </Canvas>
 
