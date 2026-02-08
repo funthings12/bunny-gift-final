@@ -67,11 +67,11 @@ export default function Page3Letter({ onNext }) {
             <motion.group animate={isExploding ? { opacity: 0, scale: 0.9 } : { opacity: 1, scale: 1 }} transition={{ duration: 1 }}>
                 <Float speed={0.5} rotationIntensity={0.05} floatIntensity={0.1}>
                     <Text
-                        fontSize={0.25}
-                        maxWidth={6}
+                        fontSize={0.28}
+                        maxWidth={3.5}
                         lineHeight={1.4}
                         color="#e2e8f0"
-                        position={[0, 2.5, 0]}
+                        position={[0, 2.8, 0]}
                         anchorX="center"
                         anchorY="top"
                         textAlign="center"
@@ -80,20 +80,20 @@ export default function Page3Letter({ onNext }) {
                     </Text>
                 </Float>
 
-                {/* Photo Placeholder */}
-                <Float speed={0.8} rotationIntensity={0.1} floatIntensity={0.2} position={[0, -2.0, 0]}>
+                {/* Photo Placeholder - Scaled Down */}
+                <Float speed={0.8} rotationIntensity={0.1} floatIntensity={0.2} position={[0, -2.5, 0]}>
                     <mesh>
-                        <planeGeometry args={[3, 4]} />
+                        <planeGeometry args={[2.5, 3.33]} />
                         <meshStandardMaterial color="#444" />
                         <Html transform position={[0, 0, 0.01]}>
-                            <div style={{ width: '300px', height: '400px', background: '#222', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', overflow: 'hidden' }}>
+                            <div style={{ width: '250px', height: '333px', background: '#222', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', overflow: 'hidden' }}>
                                 <img src="/assets/images/bunny_letter.jpg" alt="Brother" style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.innerText = "(Add bunny_letter.jpg)" }} />
                             </div>
                         </Html>
                     </mesh>
                     {/* Simple Frame */}
                     <mesh position={[0, 0, -0.05]}>
-                        <planeGeometry args={[3.2, 4.2]} />
+                        <planeGeometry args={[2.7, 3.5]} />
                         <meshStandardMaterial color="#fbbf24" />
                     </mesh>
                 </Float>
