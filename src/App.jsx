@@ -7,7 +7,27 @@ import Page2Memories from './components/Page2Memories'
 import Page3Letter from './components/Page3Letter'
 import Page4Closure from './components/Page4Closure'
 
-// ResponsiveGroup removed
+// Responsive Scaling Wrapper
+function ResponsiveGroup({ children }) {
+  const [scale, setScale] = useState(1)
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth
+      // Mobile (<600px): Scale 0.42 (Fits all content in width)
+      if (width < 600) setScale(0.42)
+      // Tablet (<1000px): Scale 0.7
+      else if (width < 1000) setScale(0.7)
+      // Desktop: Scale 1
+      else setScale(1)
+    }
+    window.addEventListener('resize', handleResize)
+    handleResize()
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  return <group scale={scale}>{children}</group>
+}
 
 function ResponsiveCamera() {
   const [zPos, setZPos] = useState(10)
@@ -49,7 +69,7 @@ export default function App() {
   return (
     <>
       <Canvas shadows dpr={[1, 2]} gl={{ antialias: true }}>
-        <ResponsiveCamera />
+        <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={50} />
         <color attach="background" args={['#050510']} />
 
         {/* Cinematic Lighting */}
@@ -62,12 +82,12 @@ export default function App() {
 
         {/* Use Suspense for loading assets */}
         <Suspense fallback={null}>
-          <group>
+          <ResponsiveGroup>
             {page === 0 && <Page1Celebration onNext={() => setPage(1)} />}
             {page === 1 && <Page2Memories onNext={() => setPage(2)} />}
             {page === 2 && <Page3Letter onNext={() => setPage(3)} />}
             {page === 3 && <Page4Closure />}
-          </group>
+          </ResponsiveGroup>
         </Suspense>
       </Canvas>
 

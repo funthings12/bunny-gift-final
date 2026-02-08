@@ -71,17 +71,17 @@ export default function Page3Letter({ onNext }) {
                         maxWidth={6}
                         lineHeight={1.4}
                         color="#e2e8f0"
-                        position={[2.5, 1.5, 0]}
-                        anchorX="left"
+                        position={[0, 2.5, 0]}
+                        anchorX="center"
                         anchorY="top"
-                        textAlign="left"
+                        textAlign="center"
                     >
                         {`Dear Bunny,\n\nEven though miles separate us today,\nyou are always close to our hearts.\n\nWatching you grow and chase your dreams\nmakes me incredibly proud.\n\nKeep shining, brother.\nWe miss you.`}
                     </Text>
                 </Float>
 
                 {/* Photo Placeholder */}
-                <Float speed={0.8} rotationIntensity={0.1} floatIntensity={0.2} position={[-3, -1, 0]}>
+                <Float speed={0.8} rotationIntensity={0.1} floatIntensity={0.2} position={[0, -2.0, 0]}>
                     <mesh>
                         <planeGeometry args={[3, 4]} />
                         <meshStandardMaterial color="#444" />
@@ -102,7 +102,7 @@ export default function Page3Letter({ onNext }) {
             {/* Particle Effect */}
             <ParticleExplosion active={isExploding} />
 
-            <Html position={[2, -3.5, 0]} style={{ opacity: isExploding ? 0 : 1, transition: 'opacity 0.5s', pointerEvents: 'auto', zIndex: 1000 }}>
+            <Html position={[0, -5, 0]} style={{ opacity: isExploding ? 0 : 1, transition: 'opacity 0.5s', pointerEvents: 'auto', zIndex: 1000 }}>
                 <button
                     onClick={handleNext}
                     style={{
